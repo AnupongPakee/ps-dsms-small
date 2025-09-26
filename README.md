@@ -1,4 +1,4 @@
-# Debt & Saving Management System (ระบบจัดการหนี้และการออมขนาดเล็ก)
+# Mini Debt & Saving Management System (ระบบจัดการหนี้และการออมขนาดเล็ก)
 
 ## Features:
 - Authentication & User Management
