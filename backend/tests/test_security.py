@@ -1,7 +1,8 @@
 import os
 
 from jose import jwt
-from security.token import create_access_token, verify_token
+from security.token_jwt import create_access_token, verify_token
+from security.hash import hash_password, verify_password
 
 secret_key = os.getenv("SECRET_KEY", "test-secret")
 algorithm = os.getenv("ALGORITHM", "HS256")
@@ -31,3 +32,10 @@ def test_verify_token():
     assert isinstance(payload, dict)
     assert payload["email"] == data["email"]
     assert payload["password"] == data["password"]
+
+def test_hash_and_verify_password():
+    hash_pass = hash_password("test hash")
+
+    assert isinstance(hash_pass, str)
+    assert verify_password("test hash", hash_pass) == True
+    assert verify_password("tes hash", hash_pass) == False
