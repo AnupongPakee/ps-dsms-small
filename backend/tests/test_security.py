@@ -12,7 +12,7 @@ def test_create_access_token():
         'email': 'test@gmail.com',
         'password': '2au8pon4g6'
     }
-    token = create_access_token(data=data)
+    token = create_access_token(data=data,secret_key=secret_key, algorithm=algorithm)
     decoded = jwt.decode(token, secret_key, algorithms=[algorithm])
 
     assert isinstance(token, str)
@@ -25,8 +25,8 @@ def test_verify_token():
         'email': 'test@gmail.com',
         'password': '2au8pon4g6'
     }
-    token = create_access_token(data=data)
-    payload = verify_token(token=token)
+    token = create_access_token(data=data, secret_key=secret_key, algorithm=algorithm)
+    payload = verify_token(token=token, secret_key=secret_key, algorithm=algorithm)
 
     assert isinstance(payload, dict)
     assert payload["email"] == data["email"]

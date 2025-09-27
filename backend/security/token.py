@@ -10,20 +10,20 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 ALGORITHM = os.getenv("ALGORITHM")
 ACCESS_TOKEN_EXPIRE_MINUTES = 60
 
-def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
+def create_access_token(data: dict, expires_delta: Optional[timedelta] = None, secret_key = SECRET_KEY, algorithm = "HS256"):
     to_encode = data.copy()
     if expires_delta:
         expire = datetime.now(timezone.utc) + expires_delta
     else:
         expire = datetime.now(timezone.utc) + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     to_encode.update({"exp": expire})
-    encoded_jwt =  jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+    encoded_jwt =  jwt.encode(to_encode, secret_key, algorithm=algorithm)
 
     return encoded_jwt
 
-def verify_token(token: str):
+def verify_token(token: str, secret_key = SECRET_KEY, algorithm = ALGORITHM):
     try:
-        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        payload = jwt.decode(token, secret_key, algorithms=[algorithm])
         
         return payload
     except ExpiredSignatureError:
